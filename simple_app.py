@@ -20,12 +20,16 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/<name>')
 def index(name="Logan"):
-	# name = request.args.get('name', name) # If we get a name, great, if we don't, use the provided. # Remvoed because the /<name> does this for us now.
+	# Remvoed because the /<name> does this for us now.
+	# name = request.args.get('name', name) # If we get a name, great, if we don't, use the provided.
 	return "Hello from {}".format(name)
 
 # You can convert things into ints inside the URL
-# The problem is that this produces a 404 if an integer is not provided.
+# A problem is that this produces a 404 if an integer is not provided.
 @app.route('/add/<int:num1>/<int:num2>')
+@app.route('/add/<float:num1>/<float:num2>')
+@app.route('/add/<float:num1>/<int:num2>')
+@app.route('/add/<int:num1>/<float:num2>')
 def add(num1, num2):
 	return "{} + {} = {}".format(num1, num2, num1 + num2)
 
