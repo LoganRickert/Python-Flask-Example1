@@ -1,5 +1,6 @@
 from flask import Flask
 # from flask import request
+from flask import render_template
 
 app = Flask(__name__)
 
@@ -22,7 +23,7 @@ app = Flask(__name__)
 def index(name="Logan"):
 	# Remvoed because the /<name> does this for us now.
 	# name = request.args.get('name', name) # If we get a name, great, if we don't, use the provided.
-	return "Hello from {}".format(name)
+	return render_template("index.html", name=name)
 
 # You can convert things into ints inside the URL
 # A problem is that this produces a 404 if an integer is not provided.
@@ -31,7 +32,10 @@ def index(name="Logan"):
 @app.route('/add/<float:num1>/<int:num2>')
 @app.route('/add/<int:num1>/<float:num2>')
 def add(num1, num2):
-	return "{} + {} = {}".format(num1, num2, num1 + num2)
+	# Could also do this:
+	# context = {'num1': num1, 'num2': num2}
+	# return render_template("add.html", **context)
+	return render_template("add.html", num1=num1, num2=num2)
 
 # Runs the app in debug mode. The server will restart after each save automatically.
 app.run(debug=True, port=8000, host='localhost')
